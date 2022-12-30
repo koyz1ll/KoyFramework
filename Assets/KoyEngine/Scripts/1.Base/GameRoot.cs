@@ -3,22 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameRoot : MonoBehaviour
+public class GameRoot : SingletonMono<GameRoot>
 {
-    public void Awake()
+    protected override void Awake()
     {
-        
+        base.Awake();
+        InitManager();
     }
-
-    // Start is called before the first frame update
-    void Start()
+    
+    private void InitManager()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        ManagerBase[] managers = GetComponents<ManagerBase>();
+        foreach (var manager in managers)
+        {
+            manager.Init();
+        }
     }
 }
